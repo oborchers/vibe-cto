@@ -22,6 +22,15 @@
       "author": {
         "name": "Dr. Oliver Borchers"
       }
+    },
+    {
+      "name": "pedantic-coder",
+      "description": "Zero-tolerance code pedantry — naming precision, casing law, structural symmetry, import discipline, and the obsessive details that separate clean code from correct code",
+      "version": "0.1.0",
+      "source": "./pedantic-coder",
+      "author": {
+        "name": "Dr. Oliver Borchers"
+      }
     }
   ]
 }
