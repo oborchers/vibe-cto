@@ -141,7 +141,11 @@ Using the approved outline:
 - Offer alternatives: current working directory, custom path
 - Use AskUserQuestion to confirm the output path
 
-**Write the draft to the chosen location, then present it and ask for feedback.**
+**Write the draft to the chosen location.**
+
+**After writing, suggest hero image ideas** — 3-5 short, concrete search terms the author can drop into a stock image search bar (Unsplash, Pexels, Shutterstock, etc.). Each term should be thematically tied to the post's central metaphor or subject, not generic. For example, a post about recursive tool-building might suggest: `"mirror reflecting mirror"`, `"blueprint of a blueprint"`, `"ouroboros snake"`, `"nesting dolls craftsmanship"`, `"feedback loop diagram"`. Avoid clichés like "person typing on laptop" or "abstract technology background."
+
+**Present the draft and image suggestions, then ask for feedback.**
 
 ### Stage 5: Polish
 
