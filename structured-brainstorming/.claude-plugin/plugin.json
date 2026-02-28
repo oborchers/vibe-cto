@@ -1,0 +1,11 @@
+{
+  "name": "structured-brainstorming",
+  "version": "0.1.0",
+  "description": "Structured thinking methods that counteract LLM biases during problem exploration — first principles, inversion, constraint manipulation, perspective forcing, analogy search, and more, organized into light/medium/heavy effort tiers",
+  "author": {
+    "name": "Dr. Oliver Borchers"
+  },
+  "repository": "https://github.com/oborchers/fractional-cto",
+  "license": "MIT",
+  "keywords": ["brainstorming", "problem-solving", "thinking", "exploration", "first-principles", "structured-thinking"]
+}
