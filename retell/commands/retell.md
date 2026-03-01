@@ -190,6 +190,14 @@ Revise the post based on feedback. Update the file in place. Repeat until the us
 
 **Every user decision point MUST use the `AskUserQuestion` tool.** Never ask for decisions via inline text like "Approve?" or listing options in prose. The interactive selector UI provides a consistent, navigable experience.
 
+### Main Conversation Owns All User Interaction
+
+`AskUserQuestion` must be called from **this command** (the main conversation), never from subagents. The `triage-analyst` and `outline-architect` subagents handle data preparation and return results. This command presents those results and calls `AskUserQuestion` for every decision gate.
+
+**Pattern:** invoke subagent → receive results → present to user → call `AskUserQuestion` → handle response → continue.
+
+### Decision Points
+
 This applies to ALL decision points with fixed options, including but not limited to:
 - Discovery mode: which conversation to use
 - PII warnings: how to proceed

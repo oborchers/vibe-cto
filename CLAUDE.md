@@ -77,8 +77,30 @@ There is no build step, linter, or test suite. Validation is manual: start a Cla
 - SKILL.md files include review checklists and good/bad pattern comparisons
 - Principles cite real-world sources and industry research
 - Meta-principles anchor each plugin (documented in the meta-skill and README)
-- **Use `AskUserQuestion` for every user decision point** in commands and agents. Never fall back to inline text prompts like "Approve?" or listing options in prose. The interactive selector provides a consistent, navigable UX. Open-ended free-text questions (backstory, detailed feedback) are exempt.
+- **Use `AskUserQuestion` for every user decision point.** See the "AskUserQuestion Orchestration" section below for the full pattern, including the critical rule that the main conversation must always own `AskUserQuestion` calls — never subagents.
 - **Version bumps must update both files:** `.claude-plugin/plugin.json` (the plugin's own manifest) and `.claude-plugin/marketplace.json` (the central registry). These must always stay in sync.
+
+## AskUserQuestion Orchestration
+
+**Every user decision point with fixed options MUST use the `AskUserQuestion` tool.** Never fall back to inline text prompts like "Approve?" or listing options in prose. The interactive selector provides a consistent, navigable UX. Open-ended free-text questions (backstory, detailed feedback) are exempt.
+
+### Critical: Main Conversation Owns All User Interaction
+
+`AskUserQuestion` must ALWAYS be called from the **main conversation**, never from subagents. Subagents launched via the Agent tool cannot reliably call `AskUserQuestion` — in observed sessions, subagents produce zero `AskUserQuestion` calls and fall back to plain-text questions that bypass the interactive selector.
+
+**Correct pattern — main conversation keeps the loop:**
+1. Call a subagent to **fetch/prepare data** (read files, parse content, return results)
+2. **Present** the subagent's results to the user
+3. Call **`AskUserQuestion`** for the user's decision
+4. Handle the response, then repeat from step 1 for the next item
+
+**Anti-pattern — never do this:**
+> Main conversation delegates an entire interactive flow to a subagent, expecting the subagent to call `AskUserQuestion` itself. The subagent will fall back to plain text, defeating the interactive UI.
+
+When designing commands and agents:
+- **Commands** run in the main conversation and should own all `AskUserQuestion` calls
+- **Subagents** handle computation, file reading, and data preparation — never user interaction
+- If a flow requires multiple user decisions, the main conversation invokes the subagent repeatedly (once per decision round) rather than delegating the entire loop
 
 ## Single-Owner Rule for Skill Content
 

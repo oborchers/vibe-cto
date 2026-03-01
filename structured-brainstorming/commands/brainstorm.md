@@ -58,6 +58,14 @@ Consult the reference files in the structured-brainstorming skill for detailed m
 
 **Every user decision point MUST use the `AskUserQuestion` tool.** Never ask for decisions via inline text like "Ready to dispatch?" or listing options in prose. The interactive selector UI provides a consistent, navigable experience.
 
+### Main Conversation Owns All User Interaction
+
+`AskUserQuestion` must be called from **this command** (the main conversation), never from subagents. The `brainstorm-explorer` subagents handle exploration and return results. This command presents those results and calls `AskUserQuestion` for every decision gate.
+
+**Pattern:** present problem restatement → call `AskUserQuestion` (dispatch/rephrase) → invoke subagents for exploration → receive results → synthesize → call `AskUserQuestion` (next steps).
+
+### Decision Points
+
 This applies to ALL decision points with fixed options, including but not limited to:
 - Dispatch or rephrase (Step 3)
 - Next steps after synthesis (Step 7)
