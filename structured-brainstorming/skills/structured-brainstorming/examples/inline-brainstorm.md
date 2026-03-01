@@ -1,4 +1,6 @@
-# Inline Brainstorm: Event System Design
+# Method Application Depth: Event System Design
+
+This example shows the depth of method application that each `brainstorm-explorer` agent produces. Five methods are applied to a single problem, demonstrating the concrete, specific findings expected from structured brainstorming.
 
 ## User Prompt
 

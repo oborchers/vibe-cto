@@ -6,7 +6,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
-session_context="<IMPORTANT>\nYou have the structured-brainstorming plugin installed.\n\nWhen users are stuck, exploring a problem space, need to think through options, or ask 'how should I approach this', invoke the structured-brainstorming skill. Use the /brainstorm command for guided sessions.\n\nAvailable methods: First Principles, Inversion/Pre-Mortem, Constraint Manipulation, Perspective Forcing, Analogy Search, MECE Decomposition, Assumption Surfacing, Diverge-then-Converge.\n\nFor deep exploration, spawn parallel brainstorm-explorer subagents.\n</IMPORTANT>"
+session_context="<IMPORTANT>\nYou have the structured-brainstorming plugin installed.\n\nWhen users are stuck, exploring a problem space, need to think through options, or ask 'how should I approach this', invoke the structured-brainstorming skill. Use the /brainstorm command for guided sessions.\n\nAvailable methods: First Principles, Inversion/Pre-Mortem, Constraint Manipulation, Perspective Forcing, Analogy Search, MECE Decomposition, Assumption Surfacing, Diverge-then-Converge.\n\nThe /brainstorm command asks the user whether to dispatch parallel brainstorm-explorer agents or rephrase the problem statement first.\n</IMPORTANT>"
 
 cat <<EOF
 {

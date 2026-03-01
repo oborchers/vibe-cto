@@ -1,6 +1,6 @@
 # structured-brainstorming
 
-Structured thinking methods that counteract LLM reasoning biases during problem exploration. Gives Claude 8 specific methods — selected because they fight known failure modes like premature convergence, sycophancy, and mode collapse. For deep dives, spawns parallel subagents that explore the problem from different angles simultaneously.
+Structured thinking methods that counteract LLM reasoning biases during problem exploration. Gives Claude 8 specific methods — selected because they fight known failure modes like premature convergence, sycophancy, and mode collapse. The user decides when to dispatch parallel subagents that explore the problem from different angles simultaneously.
 
 ## The Problem
 
@@ -23,7 +23,7 @@ Without deliberate structure, LLM responses gravitate toward the most probable a
 
 ### Automatic Skill Activation
 
-The skill activates when Claude detects relevant work: "how should I approach this?", "I'm stuck on X", "what are my options?", "help me think through this."
+The skill activates when Claude detects relevant work: "how should I approach this?", "I'm stuck on X", "what are my options?", "help me think through this." A `UserPromptSubmit` hook reinforces detection for brainstorming-related prompts.
 
 ### Command
 
@@ -31,9 +31,17 @@ The skill activates when Claude detects relevant work: "how should I approach th
 /brainstorm "How should we design the auth system for our SaaS product?"
 ```
 
+The `/brainstorm` command follows an interactive flow:
+
+1. **Problem restatement** — Claude restates the problem for confirmation
+2. **Dispatch or rephrase** — the user chooses to launch parallel agents or refine the problem statement first
+3. **Parallel exploration** — 4 `brainstorm-explorer` agents apply different methods simultaneously
+4. **Synthesis** — convergence, disagreement, surprises, recommendation, open questions
+5. **Next steps** — explore deeper, brainstorm a different angle, or done
+
 ### Parallel Subagent Exploration
 
-For high-stakes or ambiguous problems, Claude spawns `brainstorm-explorer` subagents in parallel — each applying different methods to the same problem. Agents can search the codebase and the web for cross-domain analogies.
+When the user chooses to dispatch, `brainstorm-explorer` subagents are spawned in parallel — each applying different methods to the same problem. Agents can search the codebase and the web for cross-domain analogies. The model selects which methods to assign to each agent, maximizing exploration variance.
 
 ## Plugin Components
 
@@ -41,10 +49,10 @@ For high-stakes or ambiguous problems, Claude spawns `brainstorm-explorer` subag
 |-----------|------|---------|
 | Skill | `skills/structured-brainstorming/SKILL.md` | Core methods, method selection, subagent dispatch |
 | References | `skills/structured-brainstorming/references/` | Detailed per-method guides (8 files) |
-| Examples | `skills/structured-brainstorming/examples/` | Worked sessions: inline and parallel agent (2 files) |
+| Examples | `skills/structured-brainstorming/examples/` | Worked sessions: method depth and parallel agent (2 files) |
 | Command | `commands/brainstorm.md` | `/brainstorm` slash command |
 | Agent | `agents/brainstorm-explorer.md` | Subagent for parallel exploration |
-| Hook | `hooks/hooks.json` | SessionStart awareness injection |
+| Hooks | `hooks/hooks.json` | SessionStart awareness + UserPromptSubmit detection |
 
 ## Installation
 

@@ -1,32 +1,32 @@
 ---
 name: brainstorm-explorer
 description: |
-  Use this agent for deep-dive problem exploration during heavy-tier brainstorming sessions. Spawn multiple instances in parallel, each assigned different thinking methods, to explore a problem from diverse angles simultaneously.
+  Use this agent for deep-dive problem exploration during brainstorming sessions. Spawn multiple instances in parallel, each assigned different thinking methods, to explore a problem from diverse angles simultaneously.
 
   <example>
-  Context: User asked to brainstorm auth system design and heavy tier was selected.
+  Context: User asked to brainstorm auth system design and chose to dispatch agents.
   user: "Brainstorm how we should design auth for our new SaaS product"
-  assistant: "This is a high-stakes greenfield problem — using heavy tier with parallel agents."
+  assistant: "I'll dispatch parallel brainstorm-explorer agents to explore this from multiple angles."
   <commentary>
-  Heavy-tier brainstorming spawns multiple brainstorm-explorer agents, each applying different methods (First Principles, Inversion, Analogy Search, etc.) to the same problem in parallel.
+  The user confirmed the problem framing and chose to dispatch agents. Each brainstorm-explorer applies different methods (First Principles, Inversion, Analogy Search, etc.) to the same problem in parallel.
   </commentary>
   </example>
 
   <example>
-  Context: User is stuck on a complex architecture decision.
+  Context: User is stuck on a complex architecture decision and chose to dispatch agents.
   user: "I can't decide between these three database approaches. Help me think through this thoroughly."
   assistant: "I'll explore this from multiple angles using parallel brainstorm-explorer agents."
   <commentary>
-  When the user signals they want thorough exploration, spawn brainstorm-explorer agents with different method assignments to cover the problem space comprehensively.
+  After restating the problem and getting user confirmation, spawn brainstorm-explorer agents with different method assignments to cover the problem space comprehensively.
   </commentary>
   </example>
 
   <example>
-  Context: Greenfield design with many unknowns.
+  Context: Greenfield design — user refined the problem statement once before dispatching.
   user: "We're designing our notification system from scratch. Explore the problem space before we commit."
   assistant: "Launching parallel exploration agents to cover fundamentals, failure modes, analogies, and systematic decomposition."
   <commentary>
-  Greenfield designs with high commitment cost benefit from heavy-tier parallel exploration.
+  The user rephrased the problem once to sharpen scope, then chose to dispatch agents for parallel exploration.
   </commentary>
   </example>
 model: sonnet

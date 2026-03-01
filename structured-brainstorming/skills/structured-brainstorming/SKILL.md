@@ -1,6 +1,6 @@
 ---
 name: structured-brainstorming
-description: "This skill should be used when the user needs to brainstorm, explore a problem space, think through design decisions, is stuck on an approach, wants to explore multiple solutions, asks 'how should I approach this', 'what are my options', 'help me think through this', 'help me decide between X and Y', 'what are the pros and cons', 'weigh the options', needs to evaluate alternatives, or wants structured thinking about a complex problem. Covers 8 bias-counteracting methods with optional parallel subagent exploration for deep dives."
+description: "This skill should be used when the user needs to brainstorm, explore a problem space, think through design decisions, is stuck on an approach, wants to explore multiple solutions, asks 'how should I approach this', 'what are my options', 'help me think through this', 'help me decide between X and Y', 'what are the pros and cons', 'weigh the options', needs to evaluate alternatives, or wants structured thinking about a complex problem. Covers 8 bias-counteracting methods with parallel subagent exploration for deep dives."
 version: 0.1.0
 ---
 
@@ -8,7 +8,7 @@ version: 0.1.0
 
 Structured brainstorming applies specific thinking methods that counteract LLM reasoning biases during problem exploration. Without deliberate structure, LLM responses gravitate toward the most probable answer, skip genuine alternative exploration, and converge prematurely on conventional solutions.
 
-This skill provides 8 methods selected because they fight known LLM failure modes. For complex or high-stakes problems, spawn parallel `brainstorm-explorer` subagents for deep multi-angle exploration.
+This skill provides 8 methods selected because they fight known LLM failure modes. The `/brainstorm` command drives an interactive flow where the user decides when to dispatch parallel `brainstorm-explorer` subagents for deep multi-angle exploration.
 
 ## Why Structure Matters for LLMs
 
@@ -56,17 +56,11 @@ Match problem type to recommended methods:
 
 ## Applying Methods
 
-Select methods from the table above based on the problem type. Apply each one inline — spend enough depth per method to produce a concrete finding, not a platitude. Use the reference files for the detailed step-by-step process of each method.
+Select methods from the table above based on the problem type. Each `brainstorm-explorer` agent applies its assigned methods with enough depth to produce concrete findings, not platitudes. Agents use the reference files for the detailed step-by-step process of each method.
 
 ## Parallel Exploration with Subagents
 
-For high-stakes decisions, greenfield designs, or problems where premature convergence would be costly, spawn `brainstorm-explorer` subagents in parallel using the Task tool. Each agent explores the problem from a different angle simultaneously.
-
-**When to use subagents:**
-- The problem is ambiguous with many unknowns
-- Multiple systems or stakeholders are involved
-- The user explicitly asks for thorough exploration
-- The cost of committing to the wrong approach is high
+The `/brainstorm` command asks the user whether to dispatch parallel `brainstorm-explorer` subagents or rephrase the problem statement first. When the user chooses to dispatch, spawn agents in parallel using the Agent tool — each exploring the problem from a different angle simultaneously.
 
 **Agent dispatch pattern:**
 - Agent 1: First Principles + Assumption Surfacing (strip to fundamentals)
@@ -105,5 +99,5 @@ Detailed method descriptions, step-by-step processes, and application prompts:
 
 Worked brainstorming sessions:
 
-- **`examples/inline-brainstorm.md`** -- Event system design (5 methods applied inline)
-- **`examples/parallel-agent-exploration.md`** -- Auth system greenfield (4 subagents, full parallel exploration)
+- **`examples/inline-brainstorm.md`** -- Event system design (5 methods applied, showing expected depth per method)
+- **`examples/parallel-agent-exploration.md`** -- Auth system greenfield (4 subagents, full parallel exploration with user-gated dispatch)

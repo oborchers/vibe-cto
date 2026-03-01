@@ -6,7 +6,7 @@
 
 ## Why Subagents
 
-Greenfield, high-stakes (auth failures are security incidents), many valid approaches, touches every part of the system — premature convergence here would be costly. Spawning parallel `brainstorm-explorer` agents.
+The user chose to dispatch parallel agents for this greenfield, high-stakes problem. Auth failures are security incidents, many valid approaches exist, and the design touches every part of the system — worth exploring from multiple angles before committing.
 
 ## Agent Dispatch
 
