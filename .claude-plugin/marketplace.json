@@ -26,7 +26,7 @@
     {
       "name": "pedantic-coder",
       "description": "Zero-tolerance code pedantry — naming precision, casing law, structural symmetry, import discipline, and the obsessive details that separate clean code from correct code",
-      "version": "0.1.0",
+      "version": "1.0.0",
       "source": "./pedantic-coder",
       "author": {
         "name": "Dr. Oliver Borchers"
@@ -53,7 +53,7 @@
     {
       "name": "visual-design-principles",
       "description": "Research-backed visual design principles for websites, presentations, documents, and any visual medium — grounded in VisAWI, Gestalt psychology, and empirical aesthetics research",
-      "version": "0.1.0",
+      "version": "1.0.0",
       "source": "./visual-design-principles",
       "author": {
         "name": "Dr. Oliver Borchers"
@@ -62,7 +62,7 @@
     {
       "name": "structured-brainstorming",
       "description": "Structured thinking methods that counteract LLM reasoning biases during problem exploration — first principles, inversion, constraint manipulation, perspective forcing, analogy search, and more, with parallel subagent exploration for deep dives",
-      "version": "0.1.0",
+      "version": "1.0.0",
       "source": "./structured-brainstorming",
       "author": {
         "name": "Dr. Oliver Borchers"

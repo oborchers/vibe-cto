@@ -1,6 +1,6 @@
 {
   "name": "structured-brainstorming",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Structured thinking methods that counteract LLM biases during problem exploration — first principles, inversion, constraint manipulation, perspective forcing, analogy search, and more, with parallel subagent exploration for deep dives",
   "author": {
     "name": "Dr. Oliver Borchers"

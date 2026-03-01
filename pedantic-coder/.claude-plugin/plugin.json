@@ -1,6 +1,6 @@
 {
   "name": "pedantic-coder",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Zero-tolerance code pedantry — naming precision, casing law, structural symmetry, import discipline, and the obsessive details that separate clean code from correct code",
   "author": {
     "name": "Dr. Oliver Borchers"
