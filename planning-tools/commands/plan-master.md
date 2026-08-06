@@ -102,15 +102,19 @@ When the architect completes, **do not re-read the plan in the main conversation
 
 ## Step 4 — Hand-off
 
+**Write this in plain language** — see `planning-tools:plain-language`. Short sentences, one idea each, the point first. The plan document itself stays detailed; only this summary is short.
+
 Tell the user:
-- The plan path
-- The number of phases
-- The list of optional sections included
-- Any Open Questions that propagated from the worker findings
+- Where the plan is
+- How many phases it has
+- Which optional sections were included
+- Any Open Questions that came out of the worker findings
+
+If Step 0 fetched a ticket, name it as `<ID> — <title>` (e.g. `CI-21 — Add keyboard navigation`), never as a bare ID. If the title could not be fetched, say `<ID> — (title unavailable)`.
 
 Suggest next steps:
 - `/planning-tools:plan-verify <path>` to audit the plan
-- Open the plan and edit any Open Questions before iterating
+- `/planning-tools:plan-open-questions <path>` to walk the Open Questions one by one
 - When ready, copy the first phase into Claude Code's built-in `/plan` to start execution
 
 Then **stop**. The user drives the next move.
@@ -130,5 +134,6 @@ The architect agent never asks the user anything. If it encounters ambiguity, it
 ## Notes
 
 - The plugin is **project-agnostic**. The architect chooses optional sections based on what the worker findings indicate the work touches, not from ticket prefixes or any plan-type classifier.
+- Everything this command prints follows `planning-tools:plain-language` — plain sentences in chat, and every ticket, ADR, and PR referenced by ID *and* name. The plan document it writes stays detailed.
 - Plans are written to the user's project (git-versioned), not to `~/.claude/plans/` (which is reserved for per-session plan-mode files via `/planning-tools:plan-delete`).
 - Reusing a `/planning-tools:plan-context` report via `--context` lets you separate exploration (fast, no commitment) from synthesis (committed, opus-backed). Recommended workflow for non-trivial topics.

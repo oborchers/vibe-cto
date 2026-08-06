@@ -46,12 +46,14 @@ The agent reads the `plan-verification-checklist` skill, audits the plan against
 
 Read the verification report file and surface the structured content to the user:
 
+- **Verdict:** PASS or FAIL — lead with this
 - **Severity counts:** Critical / Important / Suggestion
 - **Top 3 highest-impact fixes** (from the agent's summary)
-- **Verdict:** PASS or FAIL
 - The full report path (the user can open it for the verbatim findings)
 
 For each Critical finding, show the location and a one-line description. Do not dump the entire verbatim report in the conversation — the user has the file.
+
+**Write this presentation in plain language** — see `planning-tools:plain-language`. Short sentences, one idea each, the point first. Name every ticket and ADR with its title, not just its ID. The written report keeps the format owned by `planning-tools:plan-verification-checklist`; only what you type into the conversation follows the plain-language rules.
 
 ---
 
@@ -103,3 +105,4 @@ The `plan-verifier` agent never calls `AskUserQuestion` — it only emits the re
 - Re-run `/planning-tools:plan-verify` after every plan edit. The audit is idempotent; running it on a clean plan is a no-op.
 - The verification report is written to `/tmp/plan-verify/` (scratch). It is not part of the master plan and is not git-versioned.
 - The verifier's checklist is owned by the `plan-verification-checklist` skill. Updates to audit dimensions should land in that skill — not in this command or the agent.
+- How findings are phrased back to the user is owned by the `plain-language` skill. The plan document itself stays detailed — the rule covers chat output only.

@@ -161,7 +161,7 @@ Reproduce this exact shape, inserting trigger-based optional sections after the 
 5. **Cite path:line.** Every concrete claim about code in your phases must reference a file path with line numbers. Vague references ("update the API layer") are unacceptable.
 
 6. **Artifact-level dependencies.** When listing dependencies in the context block or Prerequisites, name the **specific artifact** that creates the dependency — not just the ticket.
-   - ✅ `Depends on: CI-22 (src/features/cases/lib/sf-links.ts helpers + i18n key + ADR-28 amendment)`
+   - ✅ `Depends on: CI-22 — Salesforce link helpers (src/features/cases/lib/sf-links.ts helpers + i18n key + ADR-28: Session error taxonomy amendment)`
    - ❌ `Depends on: CI-22`
 
 7. **Reuse existing helpers.** If a worker surfaced a reusable utility, refer to it by path and signature in the relevant phase. Do not propose new code when reusable code exists.
@@ -171,6 +171,10 @@ Reproduce this exact shape, inserting trigger-based optional sections after the 
 9. **Use the prescribed callout labels.** Bold-prefix `**Decision:**`, `**Rationale:**`, `**Risk:**`, `**Mitigation:**`, `**Note:**`. Blockquotes only for invariants and constraints — **not** the context block (v0.3.3+: the context block is a plan-level `**TL;DR:**` + bullets). No GitHub admonitions.
 
 10. **One H1, one synopsis.** The H1 is the title. No additional H1s anywhere in the document.
+
+    **Every external reference carries its name, not just its ID.** `CI-21 — Add keyboard navigation`, `ADR-28: Session error taxonomy`, `PR #412 — Fix locale fallback`. First mention in each block, not once per document — a reader who jumps to Phase 5 must still see the name there. If a title could not be fetched, write `CI-21 — (title unavailable)`; never emit a bare ID silently. The rule is owned by `planning-tools:plain-language`; `/planning-tools:plan-verify` flags violations as a Suggestion.
+
+    **The plan body stays detailed.** The plain-language rules in that skill govern chat output, not the document you are writing. Do not shorten phases, drop citations, or thin out the analysis to satisfy them. The **one-paragraph summary you return to the caller** does follow them: short sentences, one idea each, the point first.
 
 11. **One PR per master plan — never per phase.** Per-phase `git commit` and `git push` to the working branch are **allowed and encouraged** (they keep history clean and the branch in sync). What is forbidden is per-phase PR creation: do NOT write `gh pr create`, "Open PR", "Merge PR", "Reviewer can sign off after this phase", or any per-phase merge to `main`/`master`/`develop` inside a phase. All PR-related content (title, body, manual QA, deployment notes) goes in **one optional `Release` section at the bottom of the plan** that describes the single PR shipping after all phases land. Treat any urge to add per-phase PR/merge prose as a signal that the phase boundary is wrong.
 

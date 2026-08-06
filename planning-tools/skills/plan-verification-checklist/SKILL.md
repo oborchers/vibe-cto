@@ -1,7 +1,7 @@
 ---
 name: plan-verification-checklist
-description: This skill should be used by the plan-verifier agent and the /plan-verify command to audit a drafted master plan against a fixed checklist. Covers universal-core completeness, the v0.3.0+ no-tables-for-phases-or-questions rule, trigger-based section-coverage gaps, phase actionability (heading + per-phase TL;DR + bulleted scope + exit criteria), the v0.3.1+ per-phase TL;DR requirement, the v0.3.2+ plain-bullet scope shape (legacy `- [ ]`/`- [x]` accepted silently), the v0.3.3+ context-block shape (plan-level `**TL;DR:**` + bulleted metadata, legacy `>` blockquote accepted silently), integer phase numbering enforcement, dependency traceability, citation resolution, callout/evidence convention compliance, Open Questions placement, and the one-PR-per-master-plan rule. Single-owner of the audit checklist.
-version: 0.3.3
+description: This skill should be used by the plan-verifier agent and the /plan-verify command to audit a drafted master plan against a fixed checklist. Covers universal-core completeness, the v0.3.0+ no-tables-for-phases-or-questions rule, trigger-based section-coverage gaps, phase actionability (heading + per-phase TL;DR + bulleted scope + exit criteria), the v0.3.1+ per-phase TL;DR requirement, the v0.3.2+ plain-bullet scope shape (legacy `- [ ]`/`- [x]` accepted silently), the v0.3.3+ context-block shape (plan-level `**TL;DR:**` + bulleted metadata, legacy `>` blockquote accepted silently), integer phase numbering enforcement, dependency traceability, citation resolution, callout/evidence convention compliance, Open Questions placement, the one-PR-per-master-plan rule, and the v0.3.4 reference-naming dimension (a ticket, ADR, or PR cited by bare ID with no human name = Suggestion). Single-owner of the audit checklist.
+version: 0.3.4
 ---
 
 # Plan Verification Checklist
@@ -162,6 +162,21 @@ Implementation Phases, Open Questions, and Resolved Questions must use the v0.3.
 Any of these three sections rendered as a markdown table (i.e., a header row with `|` delimiters) = **Critical**, pointing the user at `planning-tools:master-plan-methodology` for the v0.3.0 shape.
 
 **Narrow-cell tables elsewhere in the plan** (Architecture matrices, Code Changes file × phase, Dependency tables, Cost summaries, etc.) are explicitly **allowed** and do not trigger this finding. The ban is scoped to wide-cell sections only.
+
+### 13. Reference naming (v0.3.4+)
+
+Every external reference must carry its **human name** alongside its ID, so a reader never has to leave the plan to find out what `CI-21` is. The rule is owned by `planning-tools:plain-language`.
+
+- [ ] Tickets appear as `<ID> — <title>` (e.g. `CI-21 — Add keyboard navigation`), not as a bare `CI-21`
+- [ ] ADRs appear as `ADR-<NN>: <title>` (e.g. `ADR-28: Session error taxonomy`), not as a bare `ADR-28`
+- [ ] Pull requests appear as `PR #<N> — <title>`, not as a bare `#412`
+- [ ] Where a title genuinely could not be fetched, the plan says so explicitly (`CI-21 — (title unavailable)`) rather than emitting a bare ID
+
+The rule applies to the **first mention in each block**, not once per document — a reader who jumps straight to Phase 5 must still see the name there. Repeating the name across sections is correct, not redundant.
+
+A bare ID = **Suggestion**. Never Important, never Critical, and it never affects the PASS/FAIL verdict. This is a readability nudge; flagging it harder would create the noise the plugin deliberately avoids.
+
+**Not audited:** the plain-language *writing* rules in `planning-tools:plain-language`. Those govern what commands print into the conversation, not the plan document. Plans stay detailed — do not flag a plan for being thorough.
 
 ## Report format
 

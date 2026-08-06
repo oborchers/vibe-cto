@@ -33,21 +33,53 @@ The architect composes the **universal core** sections (Title, plan-level **TL;D
 
 ### `/planning-tools:plan-open-questions [path] [question-number]`
 
-Walk through a master plan's `## Open Questions` one by one, capturing the user's choice for each via `AskUserQuestion`, then batch-apply all resolutions to the plan.
+Walk through open questions one by one, capturing your choice for each via `AskUserQuestion`. **The questions do not have to come from a master plan.**
 
-For each open question, the command (running in the **main conversation** — no subagent dispatch):
+**Where the questions come from** — a 4-rung ladder, first hit wins. It never hard-fails:
 
-1. Reads cited evidence files (`path:line` refs, ADRs, ticket IDs) to ground the analysis.
-2. Composes a context block: question header → 1–2 context paragraphs → optional "Why X / Why it could matter / Risk profile" sub-analysis → 2–4 numbered alternatives.
-3. Marks one alternative as **Recommended** when an obvious best answer exists; always includes a **Defer — keep open** path.
-4. Calls `AskUserQuestion` with the 2–4 alternatives (capped at 4 per the schema).
-5. Captures the choice in memory.
+1. An explicit path argument.
+2. **Whatever is already in this conversation** — a plan read earlier in the session, a `/plan-context` scope report, findings a worker agent returned, or questions you typed yourself. No git, no globbing.
+3. A branch-matched master plan (lifted from `/plan-tick`). Only attempted inside a git repo — skipped silently otherwise.
+4. Nothing found → `AskUserQuestion` offers `Point me at a file` / `I'll paste the questions` / `Cancel`.
 
-After all questions are walked, presents a batch summary and a 3-option apply gate (`Apply / Show diff first / Discard`). On Apply, moves answered questions from `## Open Questions` to `## Resolved Questions`. Deferred questions stay in Open.
+Rung 2 is the common case. The earlier version required a git repo *and* a globbed plan file *and* an `## Open Questions` heading before it would do anything, which made it useless right when a scope report had just put questions on your screen.
 
-Supports both v0.3.0 list shape and v0.2.x legacy table shape (transition note printed when the legacy parser fires).
+**Question shapes parsed:** the v0.3.0 `- **Q<N> — …:**` list, the legacy v0.2.x `| Q | Blocking? |` table, a scope report's `## Open questions blocking …` bullets, and a free-form list in the chat. The last two are auto-numbered `Q1..QN`.
 
-Optional `[question-number]` argument targets a single question — useful for re-running on just one Q after a partial answer.
+**Per question,** the command (running in the **main conversation** — no subagent dispatch) reads up to ~5 cited anchors, then prints one fixed block:
+
+```markdown
+## Q3: Should a 401 from an upstream service count as session expiry?
+
+**Why it matters** — Right now we only look at the HTTP status code.
+That means a real session expiry and an upstream error look identical.
+Until we can tell them apart, the app cannot choose between the modal and a toast.
+
+**Where it matters**
+- `src/lib/session-errors.ts:175` — the classifier branch
+- Phase 4 — Remove the bare-401 fallback
+- ADR-28: Session error taxonomy
+
+**If we get this wrong** — Users get logged out mid-task whenever an upstream service hiccups.
+
+## Your options
+### Option 1: Only treat our own 401s as expiry (Recommended)
+### Option 2: Treat every 401 as expiry
+### Option 3: Defer — keep open
+```
+
+**Why it matters** and **Where it matters** are always present. **If we get this wrong** appears only when the downside is genuinely serious. When a question has no file, phase, or ticket behind it, the command says `Not tied to a specific file yet.` rather than inventing an anchor.
+
+One `AskUserQuestion` call per question — never batched, even though the tool accepts up to 4 questions per call. Defer is always the last option.
+
+**Applying is source-aware:**
+
+| Source | What happens at the end |
+|---|---|
+| A master plan file | Summary → 3-option gate (`Apply` / `Show me the diff first` / `Discard`) → answered questions move from `## Open Questions` to `## Resolved Questions`; deferred ones stay open |
+| A scope report, or the conversation | Printed summary. **Nothing is written, and no gate is shown** — there is nothing to approve |
+
+Optional `[question-number]` argument targets a single question — useful for re-running on just one Q after a partial answer. It works for auto-numbered sources too.
 
 ### `/planning-tools:plan-verify <path>`
 
@@ -61,6 +93,7 @@ Audit a drafted master plan against the `plan-verification-checklist` skill. Dis
 - Citation resolution
 - Callout / evidence convention compliance
 - Open Questions placement (immediately after context block)
+- Reference naming — a ticket, ADR, or PR cited by bare ID with no human name (**Suggestion** only, never blocks a PASS)
 
 Emits Critical / Important / Suggestion findings with `path:line` references and a PASS / FAIL verdict. On PASS, optionally appends a `- **Verified:** YYYY-MM-DD` bullet to the plan's context block (a `> **Verified:**` line on legacy blockquote plans), with explicit user approval via `AskUserQuestion`.
 
@@ -164,6 +197,18 @@ Codified in the `master-plan-methodology` skill. Highlights:
 - **Status emoji** — `⏳ 🚧 ✅ ❌` as the last token of each phase heading.
 - **Evidence attribution** — every claim cites source (transcript+date+speaker, ADR-NN, `path:line`).
 - **Callout labels** — bold-prefix `**Decision:**`, `**Rationale:**`, `**Risk:**`, `**Mitigation:**`, `**Note:**`.
+- **Every external reference carries its name (v0.8.0+)** — `CI-21 — Add keyboard navigation`, `ADR-28: Session error taxonomy`, `PR #412 — Fix locale fallback`. Never a bare ID. When a title cannot be fetched, say so: `CI-21 — (title unavailable)`. Applies inside plan documents as well as in chat. `/plan-verify` flags violations as a **Suggestion** — it never blocks a PASS.
+
+### Plain language in chat, detail in documents (v0.8.0+)
+
+Everything a `/plan-*` command prints into the conversation is written for a reader who is skimming with low concentration: one idea per sentence, short sentences, everyday words, the point first, each block standing on its own.
+
+This deliberately does **not** apply to two things:
+
+- **The master plan `.md` itself.** Plans stay detailed, precise, and citation-heavy.
+- **Progress entries posted to Linear or GitHub.** Those keep the dense-paragraph style owned by `progress-methodology`. Only the chat summary around them gets simpler.
+
+Owned by the `plain-language` skill — commands reference it, none of them restate it.
 
 ### Tiny worked example
 

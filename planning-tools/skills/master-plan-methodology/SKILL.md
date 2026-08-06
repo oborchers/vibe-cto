@@ -1,7 +1,7 @@
 ---
 name: master-plan-methodology
-description: This skill should be used when authoring, reviewing, or modifying a multi-phase master planning document via the planning-tools plugin (especially the /plan-master and /plan-verify commands). Codifies the universal core sections, trigger-based optional sections, integer-only phase numbering, Open Questions placement, one-PR-per-plan rule, status conventions, evidence attribution, callouts, cross-reference formats, the v0.3.0 list-shape mandate (phases and questions are heading + bulleted list, never markdown tables), the v0.3.1 per-phase TL;DR requirement (1–3 sentence what/why summary under each phase heading for glance-ability), the v0.3.2 plain-bullet scope shape (`- <action>` items, no `- [ ]` checkboxes — the phase status emoji is the sole tick signal), and the v0.3.3 context-block shape (a plan-level `**TL;DR:**` + a bulleted metadata list instead of a `>` blockquote; legacy blockquote blocks accepted silently). Project-agnostic — no ticket-prefix or plan-type taxonomy.
-version: 0.3.3
+description: This skill should be used when authoring, reviewing, or modifying a multi-phase master planning document via the planning-tools plugin (especially the /plan-master and /plan-verify commands). Codifies the universal core sections, trigger-based optional sections, integer-only phase numbering, Open Questions placement, one-PR-per-plan rule, status conventions, evidence attribution, callouts, cross-reference formats, the v0.3.0 list-shape mandate (phases and questions are heading + bulleted list, never markdown tables), the v0.3.1 per-phase TL;DR requirement (1–3 sentence what/why summary under each phase heading for glance-ability), the v0.3.2 plain-bullet scope shape (`- <action>` items, no `- [ ]` checkboxes — the phase status emoji is the sole tick signal), and the v0.3.3 context-block shape (a plan-level `**TL;DR:**` + a bulleted metadata list instead of a `>` blockquote; legacy blockquote blocks accepted silently), and the v0.3.4 cross-reference rule (every ticket, ADR, and PR carries its human name alongside its ID — owned by planning-tools:plain-language). Project-agnostic — no ticket-prefix or plan-type taxonomy.
+version: 0.3.4
 ---
 
 # Master Plan Methodology
@@ -292,10 +292,14 @@ Blockquotes (`>`) are reserved for **invariants and constraints** (e.g., `> Temp
 
 ## Cross-reference conventions
 
-- **Tickets:** `[CI-15](../CI-15-PLAN.md)` (relative markdown link)
+Every external reference carries its **ID and its human name** on first mention in a block — `CI-15 — Case detail redesign`, not a bare `CI-15`. The rule is owned by `planning-tools:plain-language`; `/planning-tools:plan-verify` flags violations as a Suggestion.
+
+- **Tickets:** `[CI-15 — Case detail redesign](../CI-15-PLAN.md)` (relative markdown link)
 - **ADRs:** `[ADR-008: Template Versioning](../../decisions/ADR-008.md)`
 - **Roadmap:** `[Q2 2025 Dashboard Redesign](../../ROADMAP.md#q2-dashboard)`
 - **Dependency tables:** columns `| Blocker | Ticket | Status | ETA |`
+
+**Plan documents stay detailed.** The plain-language writing rules in `planning-tools:plain-language` govern what the commands print into the conversation — not the body of this document. Do not shorten phases or drop citations to satisfy them.
 
 ## Verified marker
 

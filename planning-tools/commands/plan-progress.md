@@ -405,4 +405,5 @@ The composition routine in Step 10 runs entirely in the main conversation. No su
 
 - This command is **safe to re-run** between phases. SHA-based idempotency ensures only new commits drive new prose; existing SHA citations are preserved verbatim.
 - For the canonical style spec, sub-marker order, adapter contracts, and three-way detection rules, see the `planning-tools:progress-methodology` skill.
+- **The entry body keeps its dense-paragraph style.** `planning-tools:plain-language` does **not** apply to it — that entry goes to Linear or GitHub, where density is the point. What *does* follow the plain-language rules is everything this command prints into the chat: the detection summary, the apply gate, and the closing confirmation. Reference every ticket and PR there as `<ID> — <title>`, never a bare ID.
 - For branch + plan matching mechanics, this command lifts directly from `/planning-tools:plan-tick` — same normalization, same fallback chain.

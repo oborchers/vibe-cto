@@ -64,7 +64,9 @@ You will receive:
 
 ## Output
 
-Write the verification report at the supplied output path using the format prescribed by the `plan-verification-checklist` skill. Then return a one-paragraph summary to the caller: total findings by severity, the verdict, the top 3 highest-impact fixes, and the path to the full report.
+Write the verification report at the supplied output path using the format prescribed by the `plan-verification-checklist` skill. Then return a one-paragraph summary to the caller: the verdict first, then total findings by severity, the top 3 highest-impact fixes, and the path to the full report.
+
+Phrase finding titles, the `Why` lines, and the `Fix` lines in **plain language** — short sentences, one idea each, everyday words (see `planning-tools:plain-language`). A finding the reader has to parse twice is a finding they skip. The report's *structure* stays exactly as the checklist prescribes; only the wording inside it gets simpler.
 
 ## Rules
 
@@ -83,6 +85,7 @@ Write the verification report at the supplied output path using the format presc
    - Phase numbering violations (0, 0.5, 1A, ranges, sub-phases)
    - Open Questions at the bottom
    - **Phases or questions sections rendered as markdown tables (v0.3.0+ Critical)**
+   - **Tickets, ADRs, or PRs referenced by bare ID with no human name (Suggestion)** — see dimension 13 in the checklist
    - **TL;DR missing or empty per phase (v0.3.1+ Important)**
    - **Plan-level TL;DR missing under the H1 (v0.3.3+ Important)**
 

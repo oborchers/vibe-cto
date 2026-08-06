@@ -173,7 +173,13 @@ Emit a terse report to the user (in the conversation, not a file). The user will
 <Claims from worker findings that didn't hold up under direct Read. Empty if all verified.>
 
 ## Open questions blocking /planning-tools:plan-master
-<Things the user must decide before drafting the plan. Empty if all clear.>
+
+One `- ` bullet per question, one question per bullet. Keep this shape — `/planning-tools:plan-open-questions` parses this section directly and auto-numbers the bullets `Q1..QN`.
+
+- <One thing the user must decide before drafting the plan.>
+- <Next question.>
+
+Omit the section entirely when there is nothing to decide.
 
 ## Suggested phase split
 
@@ -192,7 +198,13 @@ Append `(backstopped)` to any domain whose file the orchestrator had to write fr
 - ...
 ```
 
-After emitting the report, **stop**. The user will either run `/planning-tools:plan-master --context <intermediate-dir>` to draft the plan, or iterate by re-running `/planning-tools:plan-context` with adjusted domains.
+**Write the report in plain language** — see `planning-tools:plain-language`. Short sentences, one idea each. Every ticket, ADR, and PR is named as `<ID> — <title>`, never a bare ID; if a title could not be fetched, write `<ID> — (title unavailable)`.
+
+After emitting the report, **stop**. The user will then either:
+
+- run `/planning-tools:plan-master --context <intermediate-dir>` to draft the plan, or
+- run `/planning-tools:plan-open-questions` to work through the open questions above before drafting — the command reads them straight out of this report, or out of this conversation, with no plan file needed, or
+- re-run `/planning-tools:plan-context` with adjusted domains.
 
 ---
 
